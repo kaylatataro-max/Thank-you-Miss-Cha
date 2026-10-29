@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you Miss Cha! | 03 Team IRONMAN</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6 for Heroic Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cap-blue-dark': '#0B132B',
+                        'cap-blue-navy': '#1C2541',
+                        'cap-blue-primary': '#1D4ED8',
+                        'cap-blue-light': '#3B82F6',
+                        'cap-red-dark': '#991B1B',
+                        'cap-red-primary': '#DC2626',
+                        'cap-red-accent': '#EF4444',
+                        'cap-silver': '#E2E8F0',
+                        'cap-gold': '#F59E0B',
+                        'cap-gold-bright': '#FBBF24',
+                    },
+                    fontFamily: {
+                        'title': ['Bangers', 'cursive'],
+                        'hero': ['Cinzel', 'serif'],
+                        'hud': ['Orbitron', 'sans-serif'],
+                        'sans': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Modern Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B132B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #DC2626;
+            border-radius: 5px;
+            border: 2px solid #0B132B;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #EF4444;
+        }
+
+        /* Heroic Particles & Emoji Animation */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 60;
+            animation: floatHeroic 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            font-size: 1.5rem;
+        }
+
+        @keyframes floatHeroic {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0.6) rotate(0deg);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translateY(-90px) scale(1.4) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-180px) scale(0.8) rotate(360deg);
+            }
+        }
+
+        /* Background ambient glow animations */
+        @keyframes shieldPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 25px rgba(220, 38, 38, 0.8)); }
+        }
+        .animate-shield-pulse {
+            animation: shieldPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes hudGlow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        .animate-hud {
+            animation: hudGlow 2.5s ease-in-out infinite;
+        }
+
+        /* Metallic Frame Styling */
+        .metallic-card {
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid #334155;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(29, 78, 216, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .metallic-card:hover {
+            transform: translateY(-6px) scale(1.015);
+            border-color: #EF4444;
+            box-shadow: 0 15px 35px -5px rgba(220, 38, 38, 0.4), 0 0 25px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Interactive Hero Buttons */
+        .hero-btn {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+        }
+        .hero-btn:hover {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+        }
+        .hero-btn-blue {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            box-shadow: 0 4px 15px rgba(29, 78, 216, 0.4);
+        }
+        .hero-btn-blue:hover {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        }
+
+        .text-glow-red {
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.7), 0 0 30px rgba(220, 38, 38, 0.4);
+        }
+        .text-glow-blue {
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.8), 0 0 30px rgba(29, 78, 216, 0.5);
+        }
+
+        .hud-border {
+            position: relative;
+        }
+        .hud-border::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 12px; height: 12px;
+            border-top: 3px solid #ef4444;
+            border-left: 3px solid #ef4444;
+        }
+        .hud-border::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0; width: 12px; height: 12px;
+            border-bottom: 3px solid #3b82f6;
+            border-right: 3px solid #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-cap-blue-dark font-sans text-cap-silver min-h-screen relative overflow-x-hidden selection:bg-cap-red-primary selection:text-white" onclick="startAudioOnFirstUserInteraction()">
+
+    <!-- Background Futuristic HUD Grid & Stars Decoration -->
+    <div class="fixed inset-0 pointer-events-none opacity-20 z-0 overflow-hidden bg-[radial-gradient(#1d4ed8_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    
+    <div class="fixed inset-0 pointer-events-none opacity-30 z-0 overflow-hidden" id="bgStars">
+        <i class="fa-solid fa-star absolute text-cap-gold text-xl top-12 left-10 animate-pulse"></i>
+        <i class="fa-solid fa-shield-halved absolute text-cap-blue-light text-2xl top-40 left-1/4 animate-hud"></i>
+        <i class="fa-solid fa-star absolute text-cap-red-accent text-2xl top-20 right-16 animate-pulse"></i>
+        <i class="fa-solid fa-burst absolute text-cap-gold-bright text-lg top-1/3 right-10 animate-hud"></i>
+        <i class="fa-solid fa-shield-cat absolute text-cap-blue-light text-2xl bottom-32 left-16 animate-pulse"></i>
+        <i class="fa-solid fa-star absolute text-cap-silver text-3xl bottom-20 right-1/4 animate-hud"></i>
+    </div>
+
+    <!-- Floating Top Action Bar -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2 sm:gap-3">
+        <button id="bgmBtn" onclick="playClickSound(); toggleBGM(); event.stopPropagation();" class="bg-slate-900/90 backdrop-blur border-2 border-cap-blue-light text-cap-silver px-3 py-2 rounded-xl shadow-lg hover:border-cap-red-accent transition flex items-center gap-2 text-xs sm:text-sm font-hud font-bold">
+            <i class="fa-solid fa-compact-disc text-cap-gold text-base" id="bgmIcon"></i>
+            <span id="bgmText">Avengers Theme 🎵</span>
+        </button>
+        
+        <button onclick="sendSalute(event); event.stopPropagation();" class="hero-btn text-white px-4 py-2 rounded-xl shadow-xl flex items-center gap-2 text-xs sm:text-sm font-hud font-extrabold border border-cap-red-accent">
+            <i class="fa-solid fa-shield text-cap-gold animate-bounce"></i>
+            <span>SALUTE 🫡🛡️</span>
+            <span id="saluteCount" class="bg-cap-blue-dark text-cap-gold rounded-md px-2 py-0.5 text-xs font-black border border-cap-gold/40">0</span>
+        </button>
+    </div>
+
+    <!-- MAIN HERO CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-6 md:py-10 relative z-10">
+
+        <!-- CAPTAIN AMERICA BANNER HEADER SECTION -->
+        <header class="metallic-card rounded-3xl p-6 md:p-10 border-2 border-cap-blue-light/40 relative overflow-hidden mb-12 hud-border">
+            
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-cap-red-primary via-white to-cap-blue-primary"></div>
+            
+            <div class="absolute -right-20 -bottom-20 opacity-10 pointer-events-none">
+                <i class="fa-solid fa-shield-halved text-[300px] text-cap-silver"></i>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                
+                <!-- Permanent Commander Photo Frame -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative max-w-sm w-full p-3 bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl border-2 border-cap-red-primary/60 shadow-2xl">
+                        
+                        <div class="absolute -top-4 -left-4 bg-cap-red-primary text-white p-2.5 rounded-full shadow-lg border-2 border-white text-lg z-20 flex items-center justify-center w-11 h-11">
+                            <i class="fa-solid fa-star text-cap-gold"></i>
+                        </div>
+
+                        <!-- Permanent Photo Container -->
+                        <div class="relative overflow-hidden rounded-xl border-2 border-slate-700 aspect-[4/3] bg-slate-950 group">
+                            <img id="mainClassPhoto" src="class_photo.jpg.jpg" alt="Captain Miss Cha & 03 Nakshies" class="w-full h-full object-cover transition transform duration-700 group-hover:scale-105">
+    
+                            <div class="absolute bottom-2 right-2 bg-slate-900/90 text-yellow-400 px-3 py-1 rounded-full text-xs font-black shadow-md border border-yellow-500/40 flex items-center gap-1.5 z-20">
+                                <i class="fa-solid fa-shield-halved text-yellow-400"></i>
+                                <span>COMMAND SQUAD 03 🛡️</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-3 font-hud text-sm text-cap-silver font-bold tracking-widest uppercase flex items-center justify-center gap-2">
+                            <span class="text-cap-red-accent">★</span>
+                            <span class="text-cap-gold"> MISS CHA & TEAM IRONMAN</span>
+                            <span class="text-cap-blue-light">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Superhero Title & Dedication Text -->
+                <div class="lg:col-span-7 text-center lg:text-left space-y-4">
+                    
+                    <div class="inline-flex items-center gap-2 bg-slate-800/90 px-4 py-1.5 rounded-full border border-cap-gold/40 text-cap-gold font-hud text-xs font-bold shadow-md tracking-wider">
+                        <i class="fa-solid fa-shield-halved text-cap-red-accent"></i> S.H.I.E.L.D. HEROIC TEACHER DIRECTIVE • 2026
+                    </div>
+                    
+                    <h1 class="font-title text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-wider leading-none text-white">
+                        From Team Ironman <br/>
+                        <span class="text-cap-red-accent text-glow-red">THANKYOU SO MUCH,</span> <br/>
+                        <span class="text-cap-blue-light text-glow-blue font-hero tracking-normal">CAPTAIN MISS CHA!</span>
+                    </h1>
+
+                    <p class="font-sans text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed font-medium border-l-4 border-cap-red-primary pl-4 my-4">
+                        "To our ultimate hero, mentor, and protector. Thank you for guiding the 03 with unwavering courage, wisdom, and kindness. Whatever challenges come our way... <span class="text-cap-gold font-bold">03 Assemble!</span> 🛡️✨"
+                    </p>
+
+                    <div class="pt-2 flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <a href="#dossier-section" onclick="playClickSound(); event.stopPropagation();" class="hero-btn inline-flex items-center gap-2 text-white font-hud font-bold text-sm sm:text-base px-6 py-3.5 rounded-xl border border-cap-gold/50 shadow-lg">
+                            <i class="fa-solid fa-folder-open text-cap-gold"></i>
+                            <span>ACCESS HERO DOSSIERS 📁</span>
+                        </a>
+                        
+                        <button onclick="triggerAssembleEffect(event); event.stopPropagation();" class="hero-btn-blue inline-flex items-center gap-2 text-white font-hud font-bold text-sm sm:text-base px-6 py-3.5 rounded-xl border border-cap-blue-light shadow-lg">
+                            <i class="fa-solid fa-star text-cap-gold"></i>
+                            <span>AVENGERS ASSEMBLE! ⚡🦸‍♂️✨</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </header>
+
+        <!-- DOSSIER MESSAGES SECTION -->
+        <section id="dossier-section" class="scroll-mt-8">
+            
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-slate-900/80 p-6 rounded-2xl border border-slate-700/80 shadow-xl hud-border">
+                
+                <div class="flex items-center gap-4 text-center md:text-left">
+                    <div class="relative group cursor-pointer hidden sm:block">
+                        <img id="secondaryClassPhoto" src="class_photo.jpg.jpg" alt="Team Ironman Preview" class="w-16 h-16 rounded-xl object-cover border-2 border-cap-gold shadow-md">
+                    </div>
+                    <div>
+                        <h2 class="font-hud text-2xl sm:text-3xl font-extrabold text-white flex items-center justify-center md:justify-start gap-2">
+                            <span class="text-cap-red-accent">S.H.I.E.L.D.</span>
+                            <span class="text-cap-gold">HERO DOSSIERS 🗂️</span>
+                        </h2>
+                        <p class="font-sans text-xs sm:text-sm text-slate-400 mt-0.5">
+                            17 Classified Directives & Messages from 03 Cadets to Captain America
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Search Input Bar -->
+                <div class="w-full md:w-72 relative">
+                    <input type="text" id="searchInput" onkeyup="filterMessages()" placeholder="Search Cadet or Intel..." class="w-full bg-slate-950 text-slate-200 placeholder-slate-500 font-sans text-xs sm:text-sm rounded-xl px-4 py-2.5 pl-10 border border-slate-700 focus:outline-none focus:border-cap-blue-light transition">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+                </div>
+
+            </div>
+
+            <!-- GRID OF STUDENT DOSSIER CARDS -->
+            <div id="messagesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+
+            <!-- Empty Search State -->
+            <div id="noResults" class="hidden text-center py-12 bg-slate-900/90 rounded-2xl border-2 border-dashed border-slate-700 max-w-md mx-auto my-6">
+                <i class="fa-solid fa-shield-cat text-4xl text-cap-red-accent mb-3"></i>
+                <p class="font-hud text-base text-slate-300">No Hero Cadets Found Matching Query!</p>
+                <button onclick="playClickSound(); resetSearch()" class="mt-3 text-xs font-hud font-bold text-cap-gold hover:underline">RESET DOSSIER SEARCH</button>
+            </div>
+
+        </section>
+
+        <!-- FOOTER SECTION -->
+        <footer class="mt-16 text-center border-t border-slate-800 pt-8 pb-12">
+            <div class="font-hud text-lg sm:text-2xl font-black text-cap-gold flex items-center justify-center gap-2 tracking-wider">
+                <i class="fa-solid fa-star text-cap-red-accent"></i>
+                <span>WE SALUTE YOU, CAPTAIN MISS CHA! 🫡🛡️</span>
+                <i class="fa-solid fa-star text-cap-red-accent"></i>
+            </div>
+            <p class="font-sans text-xs sm:text-sm text-slate-500 mt-2">
+                Designed with Pride & Gratitude by 03 • Class of 2026 🛡️⚡
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- DOSSIER POPUP MODAL -->
+    <div id="cardModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="metallic-card rounded-2xl border-2 border-cap-red-primary p-6 sm:p-8 max-w-lg w-full shadow-2xl transform scale-95 transition-transform duration-300 relative hud-border" id="modalContainer">
+            
+            <button onclick="playClickSound(); closeModal(); event.stopPropagation();" class="absolute top-4 right-4 bg-slate-800 text-slate-300 hover:bg-cap-red-primary hover:text-white w-9 h-9 rounded-lg flex items-center justify-center font-bold transition border border-slate-600">
+                ✕
+            </button>
+
+            <div class="text-center pt-2 space-y-3">
+                <div class="inline-flex items-center gap-1.5 bg-cap-blue-navy text-cap-gold font-hud font-bold text-xs px-3 py-1 rounded-md border border-cap-gold/30">
+                    <i class="fa-solid fa-shield-halved text-cap-red-accent"></i>
+                    <span id="modalNumber">CADET #01</span>
+                </div>
+                
+                <h3 id="modalName" class="font-hud text-xl sm:text-2xl text-white font-extrabold tracking-wide">
+                    Student Name
+                </h3>
+                
+                <div class="bg-slate-950/90 p-5 rounded-xl border border-slate-800 text-left my-4 relative">
+                    <i class="fa-solid fa-quote-left text-cap-blue-primary/30 text-3xl absolute top-2 left-2 pointer-events-none"></i>
+                    <p id="modalMessage" class="font-sans text-sm sm:text-base text-slate-200 leading-relaxed font-medium relative z-10 pl-3">
+                        "Message text..."
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between text-[11px] font-hud font-semibold text-slate-400 px-1 pt-1 border-t border-slate-800">
+                    <span>S.H.I.E.L.D CADET: 03 NAKA NAKA</span>
+                    <span class="text-cap-gold">FOR: CAPTAIN MISS CHA 🛡️</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO ELEMENT targeting avengers-theme.mp3 -->
+    <audio id="bgmAudio" loop preload="auto">
+        <source src="avengers-theme.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const nakshiesData = [
+            { id: 1, name: "Anacay, Kathleen Keira M.", text: "Thank uuuuuuuu for patiently teaching us, Miss Cha! We will miss you and your ability to make learning fun and enjoyable for everyone. I know na mamimiss mo din kami (heh) and I hope na you enjoyed bonding and teaching us din. 😎 ‘03 the best CT section and we'll see uuu around nalang puuu, Miss Charlene Keith. WE LOVEE UUU !! Team Iron Man 4 da win 🤓" },
+            { id: 2, name: "Dahilig, Lhian", text: "HI MISS CHA!! Thank you for making our emtech enjoyable kahit mahirap yung topic we’re grateful dahil po ang patient nyo samin. Thank you po sa libre sa mcdo!!!" },
+            { id: 3, name: "Lucero, Joshua Andrei (ZAMNNN😍😍)", text: "Halo po miss, wla lang hi lng, chares, even though medjo confusing ung sub nyo for some of us still nagawan nyo po ng paraan for it to be fun and happy for 03, thank you for being patient po with us and I hope po miss na till pag graduate namin is may chance pa kami to be one of your held sections and thank you po for being patient wid us knowing sa kulit namin ykyk, also ms dahil senyu alam kona analog and digital kaya all happy everybady hapi dba kya yeheyy, pero legit po ms kayo po is one of our ofc first teachers sa first day and till now po I wish na teacher ka pa den namen and I hope you support and guide us till our next journey we’ll be happy to receive ur blessings anytime po kaya feel free po to interact wid us kasi gento paden kami kakulit till we graduate, tas tiktok tau ms naman habang may drill para damay kau saken hehee, di kona den po babalik ung mga wires pati ung mouse aken na toh ms, tska mcdo ko mss where’s my libre well deserved ko un, charot, bye ms sarmiento charlene keith “chacha” labyu ms and we’ll miss you po peace✌️✌️" },
+            { id: 4, name: "Gillia, Nicole J. super duper cute", text: "Hi miss, thenk u thenk u so muchz po sa lahat po, lalo na po for making emtech fun 😁 thank you rin po kasi super haba po ng patience nyo samin hehehe. We will miss u so muchh po misss, sana di ka po magsawa samin lalo na sa cuteness ko 😍. INGATTT PO IKAW PALAGII AND GOD BLESS POOOO!!!! 🥳🎉" },
+            { id: 5, name: "Langkuno, Loviel A.", text: "Hello, Miss Cha! I just wanted to thank you for everything you have done for us! Thank you for always being open for us, for being patience." },
+            { id: 7, name: "Palaganas, Zyra Shaine M.", text: "HI MISS CHAAA!!! HAPPY CHRISTMAS AND MERRY NEW YEAR PO😍🫶, CHAROTTT. KIDDING ASIDE, THANKKK YOUUU PO MISSS VERY VERY VERY VERY SO MUCHHHH SA PATIENCE NIYO SA’MIN HABANG TINUTURUAN NIYO PO KAMI NG EMTECH, NA KAHIT PARANG NASA PALENGKE NA PO TAYO MISS  KAKA TAWAG NG “MISS CHA!” “MISS CHA! TAPOS NAPO KAMI” “MISS CHA! KAMI MUNAAA!”  HAHAHAHAHAHA. AND WE ARE SO GRATEFUL MISS NA IKAW PO NAGING TEACHER NAMIN SA EMTECH PO! Dahil sa’yo naging masaya poo yung emtech kahit mahirap po siyaaa. WE LOVE YOUUU MISSSS CHACHA!!!!! MA-MISS KA PO NAMIN (pero yung subject niyo po hindi hehehehhe, eme). TAKE CARE ALWAYS MISS, GODBLESS PO, and MORE TRAVELS AND HIKINGS TO COME POO!!! Magiging solid likers niyo nalang kami sa ig po!😁seee yaaa around miss🩷🩵🤍❤️💙💛💚🧡💜" },
+            { id: 8, name: "Tataro, Mikayla Ianna N.", text: "WAZZUP MISS heheh, Good bye po mema HAUHAUHA, miss thank you po sa lahat cuz andami mong patience samin kahit na sobrang gulo namin every meeting na kala mo nagwawarlahan pag di gumagana yung circuit. WE ARE VERY THANKFUL PO kasi kayo yung naging teacher namin sa emtech na nanlilibre😋😋😋🥺🥺 sana soon ulit heh emi lang miss huhu mamimiss kita miss kahit guguluhin ka pa din namin sa faculty, sana di ka samin mag sawa hmmmpp HAUAHHAHAHA I HOPE YOU HAVE A GOOD DAY AND ALWAYS BLESSED BY GOD THANK YOU MAMA CHAA💕" },
+            { id: 9, name: "Agripa, Sean Eldred E.", text: "Happy Birthday, Happy New Year, Merry Christmas and all of the above ms. Cha! Very sad hindi na namin ikaw magiging teacher by the time those holidays come, pero you will always be in our hearts🥺🥺💝 Ms. Cha you are such an amazing teacher, you have taught me a lot especially how to make a captain america shield💝💝 Thank you so much ms. Cha!!!" },
+            { id: 10, name: "Jacobo, Ethan T. (Fluwwy flusker) ", text: "Hi miss Cha, thank you po sa mga lesson na itinuro niyo po sa amin at sa pagtulong niyo po  sa mga school works na nahihirapan po kami. I had a really good time at emtech, I had fun and also learned new things. Thank for all of making this happen, and it wouldn't be done without you po miss Cha 🖤 🤍 🖤 🤍 🖤" },
+            { id: 11, name: "Jose, Charles Daniel S.", text: "Haiiiii po miss, salamat po sa lahat ng tinuro nyo saamin,  kahit po mahirap yung lesson nagagawa nyo pa din po na maging mas madali at masaya ang klase.  Thank you din po sa pagtulong sa code kahit hirap na hirap na po kami ng group 10. Mamimiss ka po ng buong 03!!!😁😁" },
+            { id: 12, name: "Mangahas, Sophia Julliane.", text: "Good morning, good evening, and good night, CAPT AMERICA (Ms. Charlene Keith)! 🫡🇺🇸 Eme! Kidding aside, Ms. Cha, thank you po for all the effort, patience, and love you’ve given us. Kahit na super kulit ng 03, parang palengke lagi sa comlab, at paulit-ulit kaming tumatawag ng “Miss Cha” para magpa-check, you never get tired of guiding us. 😭💗 Thank you for always smiling, joining our jokes, tawanan, at okrayan. HWHWHWHW! 😭💕 I really admire your positive energy and how you make everyone feel comfortable. Your patience and dedication made even the most confusing lessons easier to understand.Honestly, hindi ko po in-expect na makakapasa ako sa subject ninyo, HUHUHU! 😭 Akala ko rin po magiging boring siya kasi puro computers, pero because of you, naging enjoyable siya! And thank you rin po sa pa-McDo! Tumaas ang points ko, eh! HEHEHE 🍟😭 Maybe you thought you’d only be a part of our journey, but you’ve made a bigger impact on us than you realize. You’ll always be one of our favorite teachers! EME, PERO TOTOO! 🫶We love you, Miss Charlene Keith! ❤️ 03 and TEAM IRON MAN are so grateful to have you as our teacher! We’ll surely miss all the kulit, tawanan, and memories inside the lab. 🫶💕" },
+            { id: 13, name: "Pakinggan, Eros (most outstanding empowering technologies student of ms. charlene keith sarmiento)", text: "HELLOO MISS CHAA!! THANK YOU FOR SUNSHINE THANK YOU FOR RAIN THANK YOU FOR JOY THANK YOU FOR PAIN its a beautiful day eyeyey ^^ Jokes aside thank you po for teaching us throughout this term 🫪kahit po ga’no kami kaingay, you still put up with us 🥺. And kahit po mahirap ang sub nyo 😊🙏Mahal na mahal po namin kayooooo! Also thank you rin po sa libre sa mcdo hehe, we will forever be grateful for your teachings and for you as a whole. Sayonara, Miss Cha 🥰✌️" },
+            { id: 14, name: "Neyra, Gabe", text: "Thank you for your patience, your effort, and for always being kind to us. We're lucky to have had you as our emtec teacher. Maraming salamiii po, Ms. Cha!ツ "},
+            { id: 15, name: "Veraguas, Avril Joy", text: "halluuurrr, ms cha! thankyouuu for everything that you've done for ‘03. tennchuuu for making fun and enjoyable ang emtech kahit nakakadugo ng brain yung ibang topic hehe but u always make sure na maiintindihan namin yung lessons and you make learning less stressful for us. tennchuuu for being so patient with us and for always doing your best to teach us. we really appreciate all the efforts, time, and energy that you give just to make sure na may natututunan kami. thankyou for making our term 1 #emtechlangsakalam journey more memorable and for being one of the teachers na hindi lang basta nagtuturo, but also makes sure na nag-eenjoy yung students while learning. we're so lucky to have you as our teacher, ms cha! sana alam mo kung gaano ka namin naa-appreciate. we wish u more blessings, happiness, and good health. stay pretty, kind, and amazing as always! love lots, ms chaaa. misss kana naming ‘03 🥺🥰🫶🏻😗"},
+            { id: 16, name: "Amores, Khateleen Yohan", text: "Hii, Ms. Cha! I just wanted to say thank you for being patient with us even though we're so noisy and naughty. Thank you for all the effort you have given to us, especially when we can't understand the lesson. You always come and teach those students who are having a hard time and those who are slow learners. I hope you improve and succeed in your life, Ms. Cha. Of course, don't forget to enjoy your life and don't let stress consume you. Thank you for everything, Ms. Cha! Takecareee always and lovelots, we will miss you! 🫶🏻🫶🏻🫶🏻"},
+            { id: 17, name: "Tenedero, James", text: "Hi po misss, I just wanted to say thank you for teaching us through term 1 and being patient with us no matter how noisy we got. Mamimiss po namin kayoo and yung emtech every first subj (kahit na mahirap ung topics HAHAHA). Thank you dn po sa libre na mcdoww. 💛"},
+            { id: 18, name: "Guste, Christian Thaddeus B.", text: "Thank u Ms Cha for having the patience to put up with shenanigans. Kahit po na sobrang ingay ko at gulo ko sa subject niyo, napipigil niyo pong magcrash out sakin. Hyk take care miss cha and i look forward to future robotics competitions (if ever man may mahanap nnmn si Kathleen Keira M. Anacay). Also were defo better than 04…"},
+
+         ]
+
+        let saluteCounter = 0;
+        let audioCtx;
+        let hasStartedMusic = false;
+
+        // Auto play BGM when user first interacts with page
+        function startAudioOnFirstUserInteraction() {
+            if (!hasStartedMusic) {
+                hasStartedMusic = true;
+                const audio = document.getElementById('bgmAudio');
+                audio.play().then(() => {
+                    document.getElementById('bgmIcon').className = 'fa-solid fa-volume-high text-cap-gold text-base animate-pulse';
+                    document.getElementById('bgmText').innerText = 'Music Playing 🎵';
+                }).catch(() => {
+                    // Modern browsers require initial interaction before audio plays
+                });
+            }
+        }
+
+        // Web Audio API Synthesized Click Sound
+        function playClickSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08);
+                
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch (e) {}
+        }
+
+        // Particle & Emoji Explosion Effect
+        function spawnEmojis(e, emojisList) {
+            const count = 16;
+            const originX = e ? e.clientX : window.innerWidth / 2;
+            const originY = e ? e.clientY : window.innerHeight / 2;
+
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'particle';
+                el.innerText = emojisList[Math.floor(Math.random() * emojisList.length)];
+                
+                const offsetX = (Math.random() - 0.5) * 220;
+                const offsetY = (Math.random() - 0.5) * 100;
+                
+                el.style.left = `${originX + offsetX}px`;
+                el.style.top = `${originY + offsetY}px`;
+                
+                document.body.appendChild(el);
+                
+                setTimeout(() => el.remove(), 3500);
+            }
+        }
+
+        function sendSalute(e) {
+            playClickSound();
+            saluteCounter++;
+            document.getElementById('saluteCount').innerText = saluteCounter;
+            spawnEmojis(e, ['🫡', '🛡️', '⭐', '❤️', '✨', '🇺🇸']);
+        }
+
+        function triggerAssembleEffect(e) {
+            playClickSound();
+            spawnEmojis(e, ['⚡', '🦸‍♂️', '💥', '🛡️', '⭐️', '🔥', '✨']);
+        }
+
+        function toggleBGM() {
+            const audio = document.getElementById('bgmAudio');
+            const icon = document.getElementById('bgmIcon');
+            const text = document.getElementById('bgmText');
+
+            if (audio.paused) {
+                audio.play().then(() => {
+                    hasStartedMusic = true;
+                    icon.className = 'fa-solid fa-volume-high text-cap-gold text-base animate-pulse';
+                    text.innerText = 'Music Playing 🎵';
+                }).catch(() => {
+                    alert('Make sure your "avengers-theme.mp3" file is in the exact same folder as this HTML file!');
+                });
+            } else {
+                audio.pause();
+                icon.className = 'fa-solid fa-compact-disc text-cap-gold text-base';
+                text.innerText = 'Avengers Theme 🎵';
+            }
+        }
+
+        function renderCards(list) {
+            const grid = document.getElementById('messagesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            grid.innerHTML = '';
+
+            if (list.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "metallic-card rounded-2xl p-5 relative cursor-pointer flex flex-col justify-between group";
+                card.onclick = (e) => {
+                    playClickSound();
+                    openModal(item);
+                    e.stopPropagation();
+                };
+                
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-700/80 pb-2.5">
+                            <span class="font-hud text-xs font-bold text-cap-gold bg-slate-900 px-2.5 py-1 rounded-md border border-cap-gold/30">
+                                CADET #${item.id}
+                            </span>
+                            <i class="fa-solid fa-shield-halved text-slate-500 group-hover:text-cap-red-accent transition-colors text-sm"></i>
+                        </div>
+                        <h4 class="font-hud text-sm font-bold text-white group-hover:text-cap-blue-light transition">
+                            ${item.name}
+                        </h4>
+                        <p class="font-sans text-xs text-slate-300 font-medium line-clamp-3 leading-relaxed pt-1">
+                            "${item.text}"
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-2.5 flex items-center justify-between text-[11px] font-hud font-bold text-cap-gold opacity-90 border-t border-slate-800">
+                        <span>OPEN DOSSIER 🛡️</span>
+                        <i class="fa-solid fa-chevron-right text-xs transform group-hover:translate-x-1 transition text-cap-red-accent"></i>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterMessages() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const filtered = nakshiesData.filter(item => 
+                item.name.toLowerCase().includes(query) || 
+                item.id.toString() === query ||
+                item.text.toLowerCase().includes(query)
+            );
+            renderCards(filtered);
+        }
+
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            renderCards(nakshiesData);
+        }
+
+        function openModal(item) {
+            document.getElementById('modalNumber').innerText = `CADET #${item.id}`;
+            document.getElementById('modalName').innerText = item.name;
+            document.getElementById('modalMessage').innerText = `"${item.text}"`;
+            
+            const modal = document.getElementById('cardModal');
+            const container = document.getElementById('modalContainer');
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('cardModal');
+            const container = document.getElementById('modalContainer');
+            
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCards(nakshiesData);
+        });
+    </script>
+</body>
+</html>
